@@ -1,0 +1,7 @@
+Introdução ao Ajax
+
+Acrônimo de Asynchronous JavaScript And XML
+
+Uma metodologia de programação que possibilita a comunicação assíncrona entre front-end e back-end de aplicações Web.
+Inicialmente disponibilizado na versão 4.0 do Internet Explorer
+Potencializou a criação do conceito de web 2.0
