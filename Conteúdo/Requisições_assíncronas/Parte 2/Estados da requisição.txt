@@ -1,0 +1,8 @@
+Estados da requisição
+
+ReadyState
+- 0: request not initialized (requisição não iniciada)
+- 1: server connection established (conexão estabelecida com servirdor)
+- 2: request received (requisição recebida)
+- 3: processing request (processando requisição)
+- 4: request finished and response is ready (requisição finalizada)
