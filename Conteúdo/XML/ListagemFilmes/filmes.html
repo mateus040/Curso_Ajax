@@ -22,19 +22,89 @@
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200) // verificação
                 {
                     let XMLFilmes = xmlHttp.responseText // retorno
-                    console.log(XMLFilmes)
+                    // console.log(XMLFilmes)
                     
                     // árvore de elementos
                     let parser = new DOMParser()
 
                     domFilmes = parser.parseFromString(XMLFilmes, 'text/xml')
 
-                    console.log(domFilmes)
+                    // console.log(domFilmes)
 
                     // Transformando em JSON
                     jsonFilmes = xmlToJson(domFilmes)
 
-                    console.log(jsonFilmes)
+                    // console.log(jsonFilmes)
+
+                    for (let i in jsonFilmes['filmes']['filme']) // buscando do JSON
+                    {
+                        let item = jsonFilmes['filmes']['filme'][i]
+
+                        // criando cada elemento do html
+                        let divRow = document.createElement('div')
+                        divRow.className = 'row'
+
+                        let divCol = document.createElement('div')
+                        divCol.className = 'col'
+
+                        let p1 = document.createElement('p')
+                        p1.innerHTML = '<strong>Título:</strong> ' + item['titulo']['#text']
+
+                        let p2 = document.createElement('p')
+                        p2.innerHTML = '<strong>Resumo:</strong> ' + item['resumo']['#text']
+
+                        
+                        let genero = ''
+                        for(let g in item.genero)
+                        {
+                            if (genero)
+                                genero += ', '
+                            
+                            genero += item.genero[g]['#text']
+                        }
+                        let p3 = document.createElement('p')
+                        p3.innerHTML = '<strong>Gênero:</strong> ' + genero
+
+
+                        let elenco = ''
+                        for(let e in item.elenco.ator)
+                        {
+                            if (elenco)
+                                elenco += ', '
+                            
+                            elenco += item.elenco.ator[e]['#text']
+                        }
+                        let p4 = document.createElement('p')
+                        p4.innerHTML = '<strong>Elenco:</strong> ' + elenco
+
+                        let p5 = document.createElement('p')
+                        p5.innerHTML = '<strong>Data de lançamento:</strong> ' + item.dataLancamento['#text'] + ' (' + item.dataLancamento['@attributes']['pais'] + ')'
+
+                        let hr = document.createElement('hr')
+
+                        divRow.appendChild (divCol) // colocando divCol dentro da divRow
+                        divCol.appendChild (p1) // colocando parágrafo dentro da divCol
+                        divCol.appendChild (p2) // colocando parágrafo dentro da divCol
+                        divCol.appendChild (p3) // colocando parágrafo dentro da divCol
+                        divCol.appendChild (p4) // colocando parágrafo dentro da divCol
+                        divCol.appendChild (p5) // colocando parágrafo dentro da divCol
+                        divCol.appendChild (hr) // colocando hr dentro da divCol
+
+                        document.getElementById('lista').appendChild(divRow) // divRow pois ela contém todos os filhos 
+                    }
+
+                    /*
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Título:</strong> Título do Filme</p>
+                            <p><strong>Resumo:</strong> Resumo do Filme</p>
+                            <p><strong>Gênero:</strong> Gênero do Filme</p>
+                            <p><strong>Elenco:</strong> Elenco do Filme</p>
+                            <p><strong>Data de Lançamento:</strong> Data de Lançamento do Filme</p>
+                            <hr>
+                        </div>
+                    </div>
+                    */
                 }
 
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 404) // quando o retorno for negativo ..
@@ -59,7 +129,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="lista">
         <div class="row">
             <div class="col">
                 <!--Botão que dispara a requisição-->
